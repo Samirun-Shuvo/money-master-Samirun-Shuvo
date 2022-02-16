@@ -1,3 +1,8 @@
 body{
-    background-color: aqua;
+    background-color: lightcyan;
+    font-family: 'Roboto Serif', sans-serif;
+}
+.left-img img{
+    height: 600px;
+    width: 100%;
 }
