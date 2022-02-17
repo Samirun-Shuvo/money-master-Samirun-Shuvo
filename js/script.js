@@ -1,75 +1,72 @@
-/* function getInputValueIncomeExpense(amountof) {
-    const incomeInputText = document.getElementById(amountof + '-input');
-    const incomeInputValue = parseFloat(incomeInputText.value);
-}
-function incomeExpensesCalculate() {
-    var incomeAmount = getInputValueIncomeExpense('income');
-    var foodCost = getInputValueIncomeExpense('food');
-    var rentCost = getInputValueIncomeExpense('rent');
-    var clothesCost = getInputValueIncomeExpense('clothes');
+function getInputValueIncomeExpense(amountof) {
+    const inputTextValue = document.getElementById(amountof + '-input');
+    const inputAmount = parseInt(inputTextValue.value);
+    if (inputAmount >= 0) {
+        inputTextValue.value = '';
+        return inputAmount;
+    } else {
+        alert('Input Amout Will Be Positive');
+    }
 
-} */
+}
 //clicked calculate button
 document.getElementById('calculate-button').addEventListener('click', function () {
-    //get input field value 
-    console.log('clicked');
-    const incomeInputText = document.getElementById('income-input');
-    const incomeInputValue = parseFloat(incomeInputText.value);
-    console.log(incomeInputValue);
-
-    const foodInputText = document.getElementById('food-input');
-    const foodInputValue = parseFloat(foodInputText.value);
-    console.log(foodInputValue);
-
-    const rentInputText = document.getElementById('rent-input');
-    const rentInputValue = parseFloat(rentInputText.value);
-    console.log(rentInputValue);
-
-    const clothesInputText = document.getElementById('clothes-input');
-    const clothesInputValue = parseFloat(clothesInputText.value);
-    console.log(clothesInputValue);
+    //get input field value
+    var incomeInputValue = getInputValueIncomeExpense('income');
+    var foodInputValue = getInputValueIncomeExpense('food');
+    var rentInputValue = getInputValueIncomeExpense('rent');
+    var clothesInputValue = getInputValueIncomeExpense('clothes');
 
     //get html text-field value
     const expanceTotalText = document.getElementById('expence-total');
-    const expanceTotalValue = parseFloat(expanceTotalText.innerText);
-    console.log(expanceTotalValue);
+    const expanceTotalValue = parseInt(expanceTotalText.innerText);
 
     const balanceTotalText = document.getElementById('balance-total');
-    const balanceTotalValue = parseFloat(balanceTotalText.innerText);
-    console.log(balanceTotalValue);
+    const balanceTotalValue = parseInt(balanceTotalText.innerText);
 
     //calculation balance and set to html
     const expenses = foodInputValue + rentInputValue + clothesInputValue;
-    expanceTotalText.innerText = expenses;
-    const balance = incomeInputValue - expenses;
-    balanceTotalText.innerText = balance;
+    if (incomeInputValue >= expenses) {
+        expanceTotalText.innerText = expenses;
+        const balance = incomeInputValue - expenses;
+        balanceTotalText.innerText = balance;
+    } else {
+        alert('Income is low than Expence')
+        expanceTotalText.innerText = '00';
+        balanceTotalText.innerText = '00';
+    }
+
 })
 
 
 //clicked save button
 document.getElementById('save-button').addEventListener('click', function () {
     //get input field value
-    const saveInputParsentText = document.getElementById('save-input');
-    const saveInputParsentValue = parseFloat(saveInputParsentText.value);
-    console.log(saveInputParsentValue);
+    const saveInputParsentValue = getInputValueIncomeExpense('save')
+
 
     //get html text-field value
     const balanceTotalText = document.getElementById('balance-total');
-    const balanceTotalValue = parseFloat(balanceTotalText.innerText);
-    console.log(balanceTotalValue);
+    const balanceTotalValue = parseInt(balanceTotalText.innerText);
 
     const saveAmountText = document.getElementById('saving-total');
-    const saveAmount = parseFloat(saveAmountText.innerText);
-    console.log(saveAmount);
+    const saveAmount = parseInt(saveAmountText.innerText);
 
     const remainingBalanceText = document.getElementById('remaining-balance');
-    const remainingBalanceValue = parseFloat(remainingBalanceText.innerText);
-    console.log(remainingBalanceValue);
+    const remainingBalanceValue = parseInt(remainingBalanceText.innerText);
 
     //calculation remaining balance and set to html
-    const savingAmount = (balanceTotalValue * saveInputParsentValue) / 100;
-    saveAmountText.innerText = savingAmount;
 
-    const remainingBalance = balanceTotalValue - savingAmount;
-    remainingBalanceText.innerText = remainingBalance;
+    if (balanceTotalValue >= 0 && balanceTotalValue >= saveInputParsentValue) {
+        const savingAmount = (balanceTotalValue * saveInputParsentValue) / 100;
+        saveAmountText.innerText = savingAmount;
+
+        const remainingBalance = balanceTotalValue - savingAmount;
+        remainingBalanceText.innerText = remainingBalance;
+    } else {
+        alert('Your balance is low')
+        saveAmountText.innerText = '00';
+        remainingBalanceText.innerText = '00';
+    }
+
 })
